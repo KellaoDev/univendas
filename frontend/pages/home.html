@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Produtos à Venda</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+      color: #f0f0f0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    header {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .title-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: #ff4b2b;
+    }
+
+    p {
+      font-size: 1em;
+      color: #ccc;
+      margin-top: 5px;
+    }
+
+    .create-button {
+      padding: 12px 25px;
+      background: linear-gradient(135deg, #ff4b2b, #ff416c);
+      color: white;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .create-button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    }
+
+    #product {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .product-card {
+      background: rgba(20, 20, 20, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 20px;
+      width: 250px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9);
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 15px rgba(255, 77, 77, 0.7);
+    }
+
+    .product-card img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .product-card h2 {
+      font-size: 1.3em;
+      margin: 10px 0;
+      color: #ff6b6b;
+    }
+
+    .product-card p {
+      margin: 5px 0;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="title-group">
+      <h1>Produtos à Venda</h1>
+      <p>Confira a lista de produtos disponíveis e aproveite as ofertas!</p>
+    </div>
+    <a href="../pages/registerProducts.html" class="create-button">Cadastrar Produto</a>
+    <a href="../pages/index.html" class="create-button" style="background: linear-gradient(135deg, #333, #555);">
+      Logout
+    </a>
+  </header>
+
+  <div id="product"></div>
+
+  <script>
+    async function fetchProducts() {
+      try {
+        const response = await fetch('http://localhost:3000/products');
+        const result = await response.json();
+
+        const container = document.getElementById('product');
+        container.innerHTML = '';
+
+        if (result.success) {
+          const products = result.data;
+
+          products.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+
+            productCard.innerHTML = `
+              <h2>${product.title}</h2>
+              <img src="${product.image_base64}" alt="Imagem do Produto">
+              <p><strong>Whatsapp:</strong> ${product.whatsapp}</p>
+              <p><strong>Preço:</strong> R$ ${product.price}</p>
+              <p><a href="https://api.whatsapp.com/send?phone=55${product.whatsapp}" target="_blank" rel="noopener noreferrer"><strong>Whatsapp</strong></a></p>
+            `;
+
+            container.appendChild(productCard);
+          });
+        } else {
+          container.textContent = result.message;
+        }
+      } catch (error) {
+        document.getElementById('product').textContent = 'Erro ao carregar os produtos.';
+        console.error(error);
+      }
+    }
+
+    fetchProducts();
+  </script>
+
+</body>
+
+</html>
