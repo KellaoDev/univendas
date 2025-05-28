@@ -4,14 +4,15 @@ const productService = new ProductService(connection);
 
 const productController = {
   async createProduct(req, res) {
-    const { image_base64, title, whatsapp, price } = req.body;
+    const { image_base64, title, whatsapp, price, specification } = req.body;
 
     try {
       const productId = await productService.createProduct({
         title,
         image_base64,
         whatsapp,
-        price
+        price,
+        specification
       });
 
       return res.status(200).json({

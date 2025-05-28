@@ -121,12 +121,17 @@
 
       <div>
         <label for="whatsapp">Whatsapp para Contato</label>
-        <input type="tel" name="whatsapp" required />
+        <input type="tel" name="whatsapp" value="55" maxlength="13" required />
       </div>
 
       <div>
         <label for="price">Valor do Produto</label>
         <input type="number" name="price" step="0.01" required />
+      </div>
+
+      <div>
+        <label for="specification">Detalhes do Produto</label>
+        <input type="text" name="specification" maxlength="100"/>
       </div>
 
       <button type="submit">Cadastrar Produto</button>
@@ -165,7 +170,8 @@
           image_base64: imageBase64,
           title: form.elements['title'].value,
           whatsapp: form.elements['whatsapp'].value,
-          price: parseFloat(form.elements['price'].value)
+          price: parseFloat(form.elements['price'].value),
+          specification:form.elements['specification'].value
         };
 
         const response = await fetch('http://localhost:3000/product', {

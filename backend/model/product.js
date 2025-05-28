@@ -1,10 +1,10 @@
 class Product {
     static async createProduct(insertData, connection) {
         try {
-            const { title, image_base64, whatsapp, price } = insertData;
+            const { title, image_base64, whatsapp, price, specification } = insertData;
 
-            const query = `INSERT INTO products (title, image_base64, whatsapp, price)VALUES (?, ?, ?, ?)`;
-            const params = [title, image_base64, whatsapp, price];
+            const query = `INSERT INTO products (title, image_base64, whatsapp, price, specification)VALUES (?, ?, ?, ?, ?)`;
+            const params = [title, image_base64, whatsapp, price, specification];
 
             const [result] = await connection.query(query, params)
 

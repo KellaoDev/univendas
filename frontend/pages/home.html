@@ -108,6 +108,21 @@
       margin: 5px 0;
       font-size: 0.9em;
     }
+
+    .whatsapp {
+      background-color: green;
+      color: white;
+      padding: 10px;
+      border-radius: 10px;
+      text-decoration: none;
+    }
+
+    .product-details {
+      margin-top: 10px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+    }
   </style>
 </head>
 
@@ -143,13 +158,22 @@
             productCard.className = 'product-card';
 
             productCard.innerHTML = `
-              <h2>${product.title}</h2>
-              <img src="${product.image_base64}" alt="Imagem do Produto">
-              <p><strong>Whatsapp:</strong> ${product.whatsapp}</p>
-              <p><strong>Preço:</strong> R$ ${product.price}</p>
-              <p><a href="https://api.whatsapp.com/send?phone=55${product.whatsapp}" target="_blank" rel="noopener noreferrer"><strong>Whatsapp</strong></a></p>
-            `;
-
+  <h2>${product.title}</h2>
+  <img src="${product.image_base64}" alt="Imagem do Produto">
+  
+  <div class="product-details">
+    <p><strong>Detalhes do Produto:</strong></p>
+    <p>${product.specification}</p>
+    <p><strong>Whatsapp:</strong> ${product.whatsapp}</p>
+    <p><strong>Preço:</strong> R$ ${product.price}</p>
+    <br>
+    <p>
+    <a class="whatsapp" href="https://api.whatsapp.com/send?phone=${product.whatsapp}&text=Olá vi seu produto no univendas, ainda está disponível?" target="_blank" rel="noopener noreferrer">
+      <strong>Whatsapp</strong>
+    </a>
+  </p>
+  </div>
+`;
             container.appendChild(productCard);
           });
         } else {
